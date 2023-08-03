@@ -1,0 +1,10 @@
+requests==2.30.0
+BeautifulSoup4==4.11.2
+transformers==4.28.1
+Datasets==2.12
+Tokenizers==0.13.3
+pandas==2.0.1
+numpy==1.24.1
+torch==2.0.1 
+symspellpy==6.7.7
+jupyter==1.0.0
