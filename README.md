@@ -1,37 +1,37 @@
 # Purpose of This Repo
 
-This repo is meant to be used to keep things organized during content development and act as the source of truth for all projects and exercises related to this course.
+This repo is meant to be used to keep things organized during content development and act as the source of truth for all exercises related to this content.
+ 
+## Repository Structure
 
-## Folder Structure
-
-### Lesson Folder
-
-This repo contains a folder for each `lesson` and one `project` folder.
+This repo contains a folder for each exercise and demo.
 
 Example
 ```
-lesson-1-hello
-lesson-2-world
-lesson-3-foo
-lesson-4-bar
-project
+demo-1-hello
+demo-2-world
+demo-3-foo
+exercise-2-world
+exercise-3-foo
+exercise-4-bar
 ```
 
-Each `lesson` folder is named using the naming convention of `lesson-#-name-of-lesson`.
+Three exercise folders and three demo folders have been provided as a template; However, you may need to add more or possibly use less depending on what is needed.
 
-Example
-```
-lesson-1-hello
-```
+If you require an additional lesson folder, you can make a copy of another folder and paste it into the root directory.
 
-Four lesson folders have been provided as a template; However, you may need to add more or possibly use less than four depending on what is needed.
+### Folder Structure - Demos
 
-If you require an additional lesson folder, you can make a copy of the folder and paste it into the root directory.
+Each demo folder should contain the final demo code as well as any supporting files.
 
-### Exercises Folder
+### Folder Structure - Exercises
 
-Each `lesson` folder contains an `exercises` folder. This `exercises` folder should contain all files and instructions necessary for the exercises along with the solution. The solutions for these exercises will be shared with students. See the `README` in the `exercises` folder for information about folder structure.
+Each exercise folder should contain all files and instructions necessary for the exercises along with the solution. The solutions for these exercises will be shared with students. See the `README` in the exercise folders for information about folder structure.
 
-### Project Folder
+### Folder Structure - Shared Datasets
 
-The `project` folder should contain all files and instructions necessary for setup. If possible, a set of instructions should be provided for both Udacity workspaces and a way to work locally (for both MacOS and Windows OS). At a minimum, one set of instructions should be provided. A `README` template has been provided in the project folder. This template layout should be used to write your README.
+The `shared-datasets` folder can be used for any data files that will be used in multiple demos or exercises. It is optional and can be deleted if not applicable.
+
+## Updating this README
+
+When the lesson content is complete and you no longer need these instructions, replace the contents of this README with a student-facing description of how to use the repository.
