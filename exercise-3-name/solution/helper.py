@@ -91,6 +91,7 @@ def tokenize_text(
     # Special tokens to ignore
     ignore_tokens = (
         tokenizer.cls_token,
+        tokenizer.sep_token,
     )
     # Get list of tokens (one chunk at a time)
     tokenized_text = [
