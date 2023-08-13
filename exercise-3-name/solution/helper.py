@@ -12,27 +12,52 @@ from collections import Counter
 
 
 class TokenMapping():
-    def __init__(self, text_as_list: list[str]):
+    def __init__(
+        self,
+        text_as_list: list[str],
+        not_found_token: str = 'TOKEN_NOT_FOUND',
+        not_found_id: int | None = None,
+    ):
         self.counter = Counter(text_as_list)
-        self.n_tokens: int = len(self.counter)
-        # Token to index mapping
-        self.token2index: dict[str, int] = {
+        # Includes `not found token`
+        self.n_tokens: int = len(self.counter) + 1
+        # Token to ID mapping
+        self._token2id: dict[str, int] = {
             token: idx
             for idx, (token, _) in enumerate(self.counter.items())
         }
-        # Reverse mapping: Index to token mapping
-        self.index2token: dict[int, str] = {
+        # Reverse mapping: ID to token mapping
+        self._id2token: dict[int, str] = {
             idx: token
-            for token, idx in self.token2index.items()
+            for token, idx in self._token2id.items()
         }
+        # Token representing not found 
+        self._not_found_token = not_found_token
+        # Not found ID defaults to next available number
+        if not_found_id is None:
+            self._not_found_id = max(self._token2id.values()) + 1
+        else:
+            self._not_found_id = not_found_id
     
     def encode(self, text_list: list[str]) -> list[int]:
         '''Encodes list of tokens (strings) into list of IDs (integers)'''
         encoded = [
-            self.token2index[token]
+            self.token2id(token)
             for token in text_list
         ]
+        # Include the not found ID if it wasn't included yet
+        if self._not_found_id not in encoded:
+            encoded += [self._not_found_id]
         return encoded
+
+    def token2id(self, token: str):
+        '''Returns ID for given token (even if token not found)'''
+        return self._token2id.get(token, self._not_found_id)
+    
+    def id2token(self, idx: int):
+        '''Returns token for given ID or the not found token'''
+        return self._id2token.get(idx, self._not_found_token)
+
 
 class ShakespeareDataset(Dataset):
     def __init__(self, encoded_text: Sequence, sequence_length: int):
@@ -54,6 +79,7 @@ class ShakespeareDataset(Dataset):
         )
         return x, y
 
+
 class ShakespeareModel(nn.Module):
     def __init__(self, n_tokens: int, embedding_dim: int, hidden_dim: int):
         super(ShakespeareModel, self).__init__()
@@ -72,12 +98,14 @@ def start_time() -> float:
     '''Returns a start time from right now'''
     return time.time()
 
+
 def time_since(start: float) -> str:
     '''Return string of time since given time (float) in "{m:02}m {s:02.1f}s"'''
     s = time.time() - start
     m = math.floor(s / 60)
     s -= m * 60
     return f'{m:02}m {s:02.1f}s'
+
 
 def build_model(
     n_tokens: int,
@@ -87,19 +115,21 @@ def build_model(
     '''Create basic RNN-based model (embeddings -> RNN -> Linear/Dense layer)'''
     return ShakespeareModel(n_tokens, embedding_dim, hidden_dim)
 
-def tokens_to_index_tensor(
+
+def tokens_to_id_tensor(
     tokens: list[str],
-    token_index_mapping: dict[str, int],
+    token_id_mapping: dict[str, int],
 ) -> torch.Tensor:
-    '''Create PyTorch Tensor from token to index based on given mapping'''
-    index_tensor = (
+    '''Create PyTorch Tensor from token to ID based on given mapping'''
+    id_tensor = (
         torch.tensor(
-            [token_index_mapping[token] for token in tokens],
+            [token_id_mapping(token) for token in tokens],
             dtype=torch.long,
         )
         .unsqueeze(0)
     )
-    return index_tensor
+    return id_tensor
+
 
 def tokenize_text(
     tokenizer,
@@ -126,5 +156,4 @@ def tokenize_text(
             token not in ignore_tokens
         )
     ]
-
     return tokenized_text
