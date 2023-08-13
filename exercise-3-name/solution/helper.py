@@ -9,6 +9,23 @@ from torch.utils.data import (
     Dataset,
     # DataLoader,
 )
+from collections import Counter
+
+
+class TokenMapping():
+    def __init__(self, text_as_list: list[str]):
+        self.counter = Counter(text_as_list)
+        self.n_tokens = len(self.counter)
+        # Characters to index mapping
+        self.token2index = {
+            char: idx
+            for idx, (char, _) in enumerate(self.counter.items())
+        }
+        # Reverse mapping: Index to charater mapping
+        self.index2token = {
+            idx: char
+            for char, idx in self.token2index.items()
+        }
 
 class ShakespeareDataset(Dataset):
     def __init__(self, encoded_text: Sequence, sequence_length: int):
