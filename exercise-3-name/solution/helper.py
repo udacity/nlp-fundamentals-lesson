@@ -188,3 +188,41 @@ def encode_text_from_tokenizer(
     # Get your text encoded as list of IDs
     enocded_text: list[str] = token_mapping.encode(tokenized_text)
     return enocded_text, token_mapping
+
+
+def next_token(
+    tokenized_text: list[str],
+    model,
+    token_mapping: TokenMapping,
+    temperature: float = 1.0,
+    topk: int | None = None,
+) -> str:
+    '''Provide next token based on temperature and top-k (if given)'''
+    # Set model into "evaluation mode" (deactivates things like Dropout layers)
+    model.eval()
+    input_tensor = tokens_to_id_tensor(
+        tokens=tokenized_text,
+        token_id_mapping=token_mapping.token2id,
+    )
+
+    with torch.no_grad():
+        output = model(input_tensor)
+        # Use temperature to change probabilities
+        probabilities = nn.functional.softmax(
+            output[0, -1] / temperature,
+            dim=0,
+        )
+        # Sampling from probabilities
+        sorted_ids = torch.argsort(probabilities, descending=True)
+        # Top-k: Defaults to using all given characters
+        if topk is None:
+            sorted_ids_subset = sorted_ids
+        else:
+            sorted_ids_subset = sorted_ids[:topk]
+        index_of_sorted = torch.multinomial(
+            probabilities[sorted_ids_subset],
+            1,
+        ).item()
+        next_char_idx = sorted_ids_subset[index_of_sorted].item()
+        
+        return token_mapping.id2token(next_char_idx)
