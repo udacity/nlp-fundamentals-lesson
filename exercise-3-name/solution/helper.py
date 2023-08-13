@@ -131,7 +131,7 @@ def tokens_to_id_tensor(
     return id_tensor
 
 
-def tokenize_text(
+def tokenize_text_from_tokenizer(
     tokenizer,
     text: str,
 ) -> list[str]:
