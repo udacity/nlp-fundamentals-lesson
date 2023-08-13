@@ -1,5 +1,6 @@
 from __future__ import annotations
 from collections.abc import Sequence
+from typing import Callable
 
 import time
 import math
@@ -157,3 +158,33 @@ def tokenize_text_from_tokenizer(
         )
     ]
     return tokenized_text
+
+
+def encode_text(
+    text: str,
+    tokenize_func: Callable[[str], list[str]],
+) -> tuple[list[int], TokenMapping]:
+    '''Return encoded (IDs) list of text & TokenMapping via tokenize function'''
+    tokenized_text: list[str] = tokenize_func(text)
+    # Get object for translating tokens to IDs and back
+    token_mapping = TokenMapping(tokenized_text)
+    # Get your text encoded as list of IDs
+    enocded_text: list[str] = token_mapping.encode(tokenized_text)
+    return enocded_text, token_mapping
+
+
+def encode_text_from_tokenizer(
+    text: str,
+    tokenizer,
+) -> tuple[list[int], TokenMapping]:
+    '''Return encoded (IDs) list of text & TokenMapping via given tokenizer'''
+    # Using tokenizer, get text as list of tokens (strings)
+    tokenized_text: list[str] = tokenize_text_from_tokenizer(
+        tokenizer=tokenizer,
+        text=text,
+    )
+    # Get object for translating tokens to IDs and back
+    token_mapping = TokenMapping(tokenized_text)
+    # Get your text encoded as list of IDs
+    enocded_text: list[str] = token_mapping.encode(tokenized_text)
+    return enocded_text, token_mapping
