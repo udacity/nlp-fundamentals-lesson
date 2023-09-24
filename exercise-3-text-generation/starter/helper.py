@@ -196,6 +196,7 @@ def next_token(
     token_mapping: TokenMapping,
     temperature: float = 1.0,
     topk: int | None = None,
+    device: str = 'cpu',
 ) -> str:
     '''Provide next token based on temperature and top-k (if given)'''
     # Set model into "evaluation mode" (deactivates things like Dropout layers)
@@ -206,7 +207,7 @@ def next_token(
     )
 
     with torch.no_grad():
-        output = model(input_tensor)
+        output = model(input_tensor.to(device))
         # Use temperature to change probabilities
         probabilities = nn.functional.softmax(
             output[0, -1] / temperature,
