@@ -1,13 +1,13 @@
-# Purpose of This Directory
+# Exercise 2 - Encoding Text
 
-This directory should contain any files and instructions necessary for this exercise.
+This directory contains any files and instructions necessary for this exercise.
 
 ## Folder Structure
 
-The starter and solution code should be located within subfolders of this directory. See example below:
+The starter and solution code are located within subfolders of this directory.
 
 ```
-exercise-2-name/
+exercise-2-encoding-text/
 ├── solution
 └── starter
 ```

@@ -1,3 +1,3 @@
-# Purpose of this Folder
+# Exercise 3 - Text Generation - Starter
 
-This folder should contain the starter code and instructions for the exercise.
+This folder contains the starter code and instructions for the exercise.
