@@ -1,0 +1,3 @@
+This directory holds cached a few models from Hugging Face as of 2023-10-10.
+
+The cache directory for downloaded pretrained models can be  overridden to this directory by setting the shell environment variable `TRANSFORMERS_CACHE` to this directly (such as `TRANSFORMERS_CACHE=$(pwd)/huggingface-models` in bash). See Hugging Face's [documentation](https://huggingface.co/docs/transformers/installation#cache-setup) for more details.
