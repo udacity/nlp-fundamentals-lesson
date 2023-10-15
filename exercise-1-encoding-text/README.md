@@ -1,4 +1,4 @@
-# Exercise 2 - Encoding Text
+# Exercise 1 - Encoding Text
 
 This directory contains any files and instructions necessary for this exercise.
 
@@ -7,7 +7,7 @@ This directory contains any files and instructions necessary for this exercise.
 The starter and solution code are located within subfolders of this directory.
 
 ```
-exercise-2-encoding-text/
+exercise-1-encoding-text/
 ├── solution
 └── starter
 ```
