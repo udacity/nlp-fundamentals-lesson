@@ -7,10 +7,10 @@ This repository contains the Jupyter Notebook files and necessary datasets and m
 ```
 ├── demo-1-hugging-face-tokenizer
 ├── demo-2-hugging-face-tokenizer-properties
-├── exercise-2-encoding-text
+├── exercise-1-encoding-text
 │   ├── solution
 │   └── starter
-└── exercise-3-text-generation
+└── exercise-2-text-generation
     ├── data
     ├── solution
     └── starter
