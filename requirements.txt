@@ -1,6 +1,6 @@
 requests==2.30.0
 BeautifulSoup4==4.11.2
-transformers==4.28.1
+transformers==4.30.0
 Datasets==2.12
 Tokenizers==0.13.3
 pandas==2.0.1
